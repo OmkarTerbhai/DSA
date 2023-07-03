@@ -55,5 +55,30 @@ public class DataTypes {
         float f = 32.89F;
         System.out.println("Float: " + f);
 
+        /*
+         * Long datatype:
+         * Can store large integer values
+         * Range:- -2^63 to 2^63 - 1
+         * Size:- 8 bytes
+         */
+        long l = 21245678L;
+        System.out.println("Long: " + l);
+
+        /*
+         * Double datatype:
+         * Can store floating point values with more precision values
+         * Size:- 8 bytes
+         */
+        double d = 3267.89234D;
+        System.out.println("Double: " + d);
+
+        /*
+         * String datatype:
+         * Can store sequence of characters
+         * Non - Primitive
+         * Size:- Depends on value
+         */
+        String s1 = "Omkar";
+        System.out.println("String: " + s1);
     }
 }
