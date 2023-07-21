@@ -20,7 +20,7 @@ public class ArraysDemo {
         printArray(arr2, arr2.length - 1);
     }
 
-    private static void printArray(int[] a, int n) {
+    public static void printArray(int[] a, int n) {
         if(n == -1) {
             System.out.println();
             return;
