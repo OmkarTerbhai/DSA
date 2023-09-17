@@ -1,8 +1,10 @@
 package com.trees;
 
 import java.util.Objects;
+import java.util.Scanner;
 
 public class BinaryTreeImpl {
+    static Scanner in = new Scanner(System.in);
     class Node {
         int data;
         Node left;
@@ -33,7 +35,7 @@ public class BinaryTreeImpl {
         b.postOrder(root);
         System.out.println();
 
-        b.preOrder(root, 60);
+        System.out.println(b.findHeight(root, 0));
     }
 
     public  void init() {
@@ -46,6 +48,29 @@ public class BinaryTreeImpl {
         root.right.left = new Node(60);
         root.right.right = new Node(70);
 
+    }
+    private void insertRoot(int data) {
+        root = new Node(data);
+        insertNodes(root);
+    }
+
+    private void insertNodes(Node root) {
+        if(Objects.isNull(root)) {
+            return;
+        }
+
+        System.out.println("Enter left or right of " + root.data);
+        String dir = in.nextLine();
+        System.out.println("Enter data: ");
+        int data = in.nextInt();
+        if("left".equals(dir)) {
+            root.left = new Node(data);
+            insertNodes(root.left);
+        }
+        else {
+            root.right = new Node(data);
+            insertNodes(root.right);
+        }
     }
 
     /*
@@ -97,6 +122,17 @@ public class BinaryTreeImpl {
         }
         preOrder(node.left, ele);
         preOrder(node.right, ele);
+    }
+
+    int findHeight(Node node, int h) {
+        if(Objects.isNull(node)) {
+            return -1;
+        }
+
+        int lH = findHeight(node.left, h+1);
+        int rH = findHeight(node.right, h+1);
+
+        return Math.max(rH, lH) + 1;
     }
 
 
