@@ -60,7 +60,7 @@ public class GraphImpl {
     }
 
     private int traverseConnected() {
-        List<Integer> li = new ArrayList<>();
+        List<Integer> li = new ArrayList<>(graph.size());
         int connectedComponents = 0;
         for(int i = 0; i < graph.size(); i++) {
             if(!li.contains(i)) {
@@ -72,10 +72,13 @@ public class GraphImpl {
     }
 
     public static void main(String[] args) {
-        GraphImpl g = new GraphImpl(5);
-        g.graph.get(1).add(0);
-        g.graph.get(2).add(1);
+        GraphImpl g = new GraphImpl(7);
+        g.graph.get(0).add(1);
+        g.graph.get(1).add(2);
+        g.graph.get(2).add(3);
         g.graph.get(3).add(4);
+
+        g.graph.get(5).add(6);
 //        g.dfs(0);
         //g.bfs(0);
         System.out.println("No of connected components: "+ g.traverseConnected());
