@@ -93,18 +93,14 @@ class Twitter {
                 Tweet th = null;
                 if(null != u)
                     th = u.th;
-                if(null != th)
+                while(th != null) {
                     pq.add(th);
+                    th = th.next;
+                }
             }
             int n = 10;
-            while(!pq.isEmpty() && n >= 0) {
-                Tweet t = pq.poll();
-                liRet.add(t.id);
-                while(t.next != null) {
-                    liRet.add(t.next.id);
-                    pq.add(t.next);
-                    t = t.next;
-                }
+            while(!pq.isEmpty() && n > 0) {
+                liRet.add(pq.poll().id);
                 n--;
             }
         }
