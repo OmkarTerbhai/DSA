@@ -1,0 +1,1 @@
+This repository contains all code that I have writtem to practice and understand Data Structures and Algorithms from the ground up.
