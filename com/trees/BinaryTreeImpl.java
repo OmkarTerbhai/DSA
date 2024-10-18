@@ -3,85 +3,73 @@ package com.trees;
 import java.util.*;
 
 class Pair {
-    BinaryTreeImpl.Node node;
+    BinaryTreeImpl.TreeNode treeNode;
     int num;
 
-    public Pair(BinaryTreeImpl.Node node, int num) {
-        this.node = node;
+    public Pair(BinaryTreeImpl.TreeNode treeNode, int num) {
+        this.treeNode = treeNode;
         this.num = num;
     }
 }
 public class BinaryTreeImpl {
     static Scanner in = new Scanner(System.in);
-    class Node {
-        int data;
-        Node left;
-        Node right;
+    class TreeNode {
+        int val;
+        TreeNode left;
+        TreeNode right;
 
-        public Node(int data) {
-            this.data = data;
+        public TreeNode(int val) {
+            this.val = val;
             this.left = null;
             this.right = null;
         }
     }
 
     class Pair {
-        Node node;
+        TreeNode treeNode;
         int num;
 
-        public Pair(Node node, int num) {
-            this.node = node;
+        public Pair(TreeNode treeNode, int num) {
+            this.treeNode = treeNode;
             this.num = num;
         }
     }
 
-    static Node root;
+    static TreeNode root;
 
     public static void main(String[] args) {
         BinaryTreeImpl b = new BinaryTreeImpl();
         b.init();
-        List<Integer> preOrder = new ArrayList<>();
-        List<Integer> inOrder = new ArrayList<>();
-        List<Integer> postOrder = new ArrayList<>();
 
-        b.iterativeDFSTravel(root, preOrder, inOrder, postOrder);
-
-        System.out.println(preOrder);
-        System.out.println(inOrder);
-        System.out.println(postOrder);
+        System.out.println(b.maxPathSum(root));
     }
 
     public  void init() {
-        root = new Node(10);
-        root.left = new Node(20);
-        root.right = new Node(30);
-
-        root.left.left = new Node(40);
-        root.left.right = new Node(50);
-        root.right.left = new Node(60);
-        root.right.right = new Node(70);
+        root = new TreeNode(1);
+        root.left = new TreeNode(2);
+        root.right = new TreeNode(3);
 
     }
     private void insertRoot(int data) {
-        root = new Node(data);
+        root = new TreeNode(data);
         insertNodes(root);
     }
 
-    private void insertNodes(Node root) {
+    private void insertNodes(TreeNode root) {
         if(Objects.isNull(root)) {
             return;
         }
 
-        System.out.println("Enter left or right of " + root.data);
+        System.out.println("Enter left or right of " + root.val);
         String dir = in.nextLine();
         System.out.println("Enter data: ");
         int data = in.nextInt();
         if("left".equals(dir)) {
-            root.left = new Node(data);
+            root.left = new TreeNode(data);
             insertNodes(root.left);
         }
         else {
-            root.right = new Node(data);
+            root.right = new TreeNode(data);
             insertNodes(root.right);
         }
     }
@@ -89,80 +77,80 @@ public class BinaryTreeImpl {
     /*
      * Node Left Right
      */
-    void preOrder(Node node) {
-        if(Objects.isNull(node)) {
+    void preOrder(TreeNode treeNode) {
+        if(Objects.isNull(treeNode)) {
             return;
         }
 
-        System.out.print(node.data + " ");
-        preOrder(node.left);
-        preOrder(node.right);
+        System.out.print(treeNode.val + " ");
+        preOrder(treeNode.left);
+        preOrder(treeNode.right);
     }
 
     /*
      *   Left Node Right
      */
-    void inOrder(Node node) {
-        if(Objects.isNull(node)) {
+    void inOrder(TreeNode treeNode) {
+        if(Objects.isNull(treeNode)) {
             return;
         }
 
-        inOrder(node.left);
-        System.out.print(node.data + " ");
-        inOrder(node.right);
+        inOrder(treeNode.left);
+        System.out.print(treeNode.val + " ");
+        inOrder(treeNode.right);
     }
 
     /*
      *  Left Right Node
      */
-    void postOrder(Node node) {
-        if(Objects.isNull(node)) {
+    void postOrder(TreeNode treeNode) {
+        if(Objects.isNull(treeNode)) {
             return;
         }
 
-        postOrder(node.left);
-        postOrder(node.right);
-        System.out.print(node.data + " ");
+        postOrder(treeNode.left);
+        postOrder(treeNode.right);
+        System.out.print(treeNode.val + " ");
     }
 
-    void preOrder(Node node, int ele) {
-        if(Objects.isNull(node)) {
+    void preOrder(TreeNode treeNode, int ele) {
+        if(Objects.isNull(treeNode)) {
             return;
         }
-        if(node.data == ele) {
+        if(treeNode.val == ele) {
             System.out.println("Found");
             return;
         }
-        preOrder(node.left, ele);
-        preOrder(node.right, ele);
+        preOrder(treeNode.left, ele);
+        preOrder(treeNode.right, ele);
     }
 
-    int findHeight(Node node, int h) {
-        if(Objects.isNull(node)) {
+    int findHeight(TreeNode treeNode, int h) {
+        if(Objects.isNull(treeNode)) {
             return -1;
         }
 
-        int lH = findHeight(node.left, h+1);
-        int rH = findHeight(node.right, h+1);
+        int lH = findHeight(treeNode.left, h+1);
+        int rH = findHeight(treeNode.right, h+1);
 
         return Math.max(rH, lH) + 1;
     }
 
-    void bfs(Node node) {
-        Queue<Node> queue = new LinkedList<>();
+    void bfs(TreeNode treeNode) {
+        Queue<TreeNode> queue = new LinkedList<>();
 
-        queue.add(node);
+        queue.add(treeNode);
 
         while (!queue.isEmpty()) {
             int n = queue.size();
 
             for(int i = 1; i <= n; i++) {
-                Node ans = queue.poll();
+                TreeNode ans = queue.poll();
                 if(ans != null) {
                     if (ans.left != null) queue.add(ans.left);
                     if (ans.right != null) queue.add(ans.right);
 
-                    System.out.print(ans.data + " ");
+                    System.out.print(ans.val + " ");
                 }
 
             }
@@ -170,15 +158,15 @@ public class BinaryTreeImpl {
         }
     }
 
-    public void iterativePreOrder(Node root) {
+    public void iterativePreOrder(TreeNode root) {
         if(null == root) return;
 
-        Stack<Node> st = new Stack<>();
+        Stack<TreeNode> st = new Stack<>();
         st.push(root);
 
         while(!st.isEmpty()) {
-            Node rem = st.pop();
-            System.out.print(rem.data + " ");
+            TreeNode rem = st.pop();
+            System.out.print(rem.val + " ");
 
             if(rem.right != null) {
                 st.push(rem.right);
@@ -189,68 +177,123 @@ public class BinaryTreeImpl {
         }
     }
 
-    public void iterativeInorder(Node node) {
-        Stack<Node> st = new Stack<>();
+    public void iterativeInorder(TreeNode treeNode) {
+        Stack<TreeNode> st = new Stack<>();
 
         while (true) {
-            if(node != null) {
-                st.push(node);
-                node = node.left;
+            if(treeNode != null) {
+                st.push(treeNode);
+                treeNode = treeNode.left;
             }
             else {
                 if(st.isEmpty()) break;
-                Node rem = st.pop();
-                System.out.print(rem.data + " ");
-                node = rem.right;
+                TreeNode rem = st.pop();
+                System.out.print(rem.val + " ");
+                treeNode = rem.right;
             }
         }
     }
 
-    public void iterativePostOrder(Node node) {
-        if(node == null) return;
+    public void iterativePostOrder(TreeNode treeNode) {
+        if(treeNode == null) return;
 
-        Stack<Node> st1 = new Stack<>();
-        Stack<Node> st2 = new Stack<>();
-        st1.push(node);
+        Stack<TreeNode> st1 = new Stack<>();
+        Stack<TreeNode> st2 = new Stack<>();
+        st1.push(treeNode);
         while(!st1.isEmpty()) {
-            Node rem = st1.pop();
+            TreeNode rem = st1.pop();
             st2.push(rem);
             if(rem.left != null) st1.push(rem.left);
             if(rem.right != null) st1.push(rem.right);
         }
 
         while(!st2.isEmpty()) {
-            System.out.print(st2.pop().data + " ");
+            System.out.print(st2.pop().val + " ");
         }
     }
 
-    public void iterativeDFSTravel(Node node, List<Integer> preOrder, List<Integer> inOrder, List<Integer> postOrder) {
-        if(node == null) return;
+    public void iterativeDFSTravel(TreeNode treeNode, List<Integer> preOrder, List<Integer> inOrder, List<Integer> postOrder) {
+        if(treeNode == null) return;
 
         Stack<Pair> st = new Stack<>();
-        st.push(new Pair(node, 1));
+        st.push(new Pair(treeNode, 1));
 
         while (!st.isEmpty()) {
             Pair rem = st.pop();
 
             if(rem.num == 1) {
-                preOrder.add(rem.node.data);
+                preOrder.add(rem.treeNode.val);
 
-                st.push(new Pair(rem.node, 2));
-                if(rem.node.left != null) {
-                    st.push(new Pair(rem.node.left, 1));
+                st.push(new Pair(rem.treeNode, 2));
+                if(rem.treeNode.left != null) {
+                    st.push(new Pair(rem.treeNode.left, 1));
                 }
             } else if (rem.num == 2) {
-                inOrder.add(rem.node.data);
+                inOrder.add(rem.treeNode.val);
 
-                st.push(new Pair(rem.node, 3));
-                if(rem.node.right != null)
-                    st.push(new Pair(rem.node.right, 1));
+                st.push(new Pair(rem.treeNode, 3));
+                if(rem.treeNode.right != null)
+                    st.push(new Pair(rem.treeNode.right, 1));
             }
             else {
-                postOrder.add(rem.node.data);
+                postOrder.add(rem.treeNode.val);
             }
         }
+    }
+
+    public boolean isValidBST(TreeNode root) {
+        if(root == null) {
+            return true;
+        }
+
+        boolean left = isValidBST(root.left);
+        boolean right = isValidBST(root.right);
+
+        if(root.left != null && root.right != null) {
+            return (root.left.val < root.val && root.right.val > root.val);
+        }
+
+        if(root.left != null || root.right != null) {
+            return false;
+        }
+        return true;
+    }
+
+    public int sumNumbers(TreeNode root) {
+        return helper(root, "");
+    }
+
+    private int helper(TreeNode root, String path) {
+        if(root == null) return 0;
+
+        if(root.left == null && root.right == null) {
+            //Leaf Node
+            return Integer.parseInt(path + root.val);
+        }
+
+        return helper(root.left, path + root.val) + helper(root.right, path + root.val);
+    }
+
+    int iMax;
+    public int maxPathSum(TreeNode root) {
+        iMax = Integer.MIN_VALUE;
+        helper(root, 0);
+        return iMax;
+    }
+
+    private int helper(TreeNode root, int iSum) {
+        if(root == null) return 0;
+
+        if(root.left == null && root.right == null) {
+            return root.val + iSum;
+        }
+
+        int left = helper(root.left, iSum + root.val);
+        int right = helper(root.right, iSum);
+
+        iMax = Math.max(iMax, left + right);
+
+        return left + right;
     }
 
 }
