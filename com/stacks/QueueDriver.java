@@ -2,7 +2,7 @@ package com.stacks;
 
 public class QueueDriver {
     public static void main(String[] args) throws Exception {
-        QueueUsingStack q = new QueueUsingStack();
+        QueueUsingStack2 q = new QueueUsingStack2();
 
         q.enqueue(5);
         q.enqueue(4);
