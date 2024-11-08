@@ -2,14 +2,14 @@ package com.stacks;
 
 public class QueueDriver {
     public static void main(String[] args) throws Exception {
-        QueueImplArrays<Integer> queue = new QueueImplArrays<>(Integer.class, 10);
+        QueueUsingStack q = new QueueUsingStack();
 
-        queue.enqueue(21);
-        queue.enqueue(33);
-        queue.enqueue(44);
-        queue.dequeue();
-        queue.enqueue(22);
+        q.enqueue(5);
+        q.enqueue(4);
+        q.enqueue(2);
+        q.dequeue();
+        q.enqueue(1);
 
-        System.out.println(queue.peek());
+        System.out.println(q.peek());
     }
 }
