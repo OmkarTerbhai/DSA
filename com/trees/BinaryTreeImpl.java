@@ -1,5 +1,7 @@
 package com.trees;
 
+import com.sun.source.tree.Tree;
+
 import java.util.*;
 
 class Pair {
@@ -41,7 +43,11 @@ public class BinaryTreeImpl {
         BinaryTreeImpl b = new BinaryTreeImpl();
         b.init();
 
-        System.out.println(b.maxPathSum(root));
+        int[] post = {9,15,7,20,3};
+        int[] in = {9,3,15,20,7};
+
+        TreeNode r = b.buildTree(in, post);
+        b.inOrder(r);
     }
 
     public  void init() {
@@ -259,41 +265,107 @@ public class BinaryTreeImpl {
         return true;
     }
 
-    public int sumNumbers(TreeNode root) {
-        return helper(root, "");
-    }
-
-    private int helper(TreeNode root, String path) {
-        if(root == null) return 0;
-
-        if(root.left == null && root.right == null) {
-            //Leaf Node
-            return Integer.parseInt(path + root.val);
-        }
-
-        return helper(root.left, path + root.val) + helper(root.right, path + root.val);
-    }
+//    public int sumNumbers(TreeNode root) {
+//        return helper(root, "");
+//    }
+//
+//    private int helper3(TreeNode root, String path) {
+//        if(root == null) return 0;
+//
+//        if(root.left == null && root.right == null) {
+//            //Leaf Node
+//            return Integer.parseInt(path + root.val);
+//        }
+//
+//        return helper(root.left, path + root.val) + helper(root.right, path + root.val);
+//    }
 
     int iMax;
     public int maxPathSum(TreeNode root) {
         iMax = Integer.MIN_VALUE;
-        helper(root, 0);
+        helper3(root, 0);
         return iMax;
     }
 
-    private int helper(TreeNode root, int iSum) {
+    private int helper3(TreeNode root, int iSum) {
         if(root == null) return 0;
 
         if(root.left == null && root.right == null) {
             return root.val + iSum;
         }
 
-        int left = helper(root.left, iSum + root.val);
-        int right = helper(root.right, iSum);
+        int left = helper3(root.left, iSum + root.val);
+        int right = helper3(root.right, iSum);
 
         iMax = Math.max(iMax, left + right);
 
         return left + right;
+    }
+
+    String s;
+    // Encodes a tree to a single string.
+    public String serialize(TreeNode root) {
+        s = "";
+        s = helper3(root, s);
+        return s;
+    }
+
+    private String  helper3(TreeNode root, String s) {
+        if(root == null) {
+            s += ",";
+            return s;
+        }
+
+        s += root.val;
+        s = helper3(root.left, s);
+        s = helper3(root.right, s);
+
+        return s;
+    }
+
+    // Decodes your encoded data to tree.
+    public TreeNode deserialize(String data) {
+        return helper2(data, 0);
+    }
+
+    private TreeNode helper2(String data, int idx) {
+        if(data.length() == 0) return null;
+
+        String s = data.substring(idx, idx+1);
+        if(s.equals(",")) {
+            return null;
+        }
+        TreeNode node = new TreeNode(Integer.parseInt(s));
+
+        node.left = helper2(data, idx+1);
+        node.right = helper2(data, idx+2);
+
+        return node;
+    }
+
+    public TreeNode buildTree(int[] inorder, int[] postorder) {
+        TreeNode root = helperBuild(inorder,postorder);
+        return root;
+    }
+
+    private TreeNode helperBuild(int[] inorder, int[] postorder) {
+        if(postorder.length == 0) return null;
+
+        int n = postorder.length;
+        int val = postorder[n-1];
+        int inorderIdx = -1;
+        for(int i = 0; i < inorder.length; i++) {
+            if(inorder[i] == val) {
+                inorderIdx = i;
+                break;
+            }
+        }
+
+        TreeNode node = new TreeNode(val);
+        node.left = helperBuild(Arrays.copyOfRange(inorder, 0, inorderIdx), Arrays.copyOfRange(postorder, 0, inorderIdx));
+        node.right = helperBuild(Arrays.copyOfRange(inorder, inorderIdx+1, inorder.length), Arrays.copyOfRange(postorder, inorderIdx, postorder.length-1));
+
+        return node;
     }
 
 }
