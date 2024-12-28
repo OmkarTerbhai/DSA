@@ -20,8 +20,8 @@ public class QueueImplLinkedList<T> {
         }
         else {
             QueueNode<T> temp = new QueueNode<>(ele);
-            temp.next = back;
-            back = temp;
+            back.next = temp;
+            back = back.next;
         }
     }
 
