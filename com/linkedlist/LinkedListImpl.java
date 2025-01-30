@@ -17,7 +17,7 @@ class Node {
     }
 }
 public class LinkedListImpl {
-    Node head;
+    public Node head;
     Node tail;
     void addFirst(int data) {
         Node newN = new Node(data);
@@ -30,7 +30,7 @@ public class LinkedListImpl {
         }
     }
 
-    void addLast(int data) {
+    public void addLast(int data) {
         Node newN = new Node(data);
         if(Objects.isNull(head)) {
             head = newN;
@@ -104,7 +104,7 @@ public class LinkedListImpl {
         }
     }
 
-    void display() {
+    public void display() {
         Node temp = head;
         while (temp != null) {
             System.out.print(temp.data + "->");
@@ -153,7 +153,7 @@ public class LinkedListImpl {
         return head;
     }
 
-    private Node reversePartialLL(Node head, int st, int end) {
+    public Node reversePartialLL(Node head, int st, int end) {
       //Find start and end nodes
         Node start = head;
         Node endNode = head;
